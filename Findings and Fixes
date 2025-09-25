@@ -1,0 +1,24 @@
+From the findings of the scan, it can be understood that critical vulnerbailites are not currently present in this system.
+
+Some of the low level vulnerabilites that can be found are:
+  - Netstat Portscanner (SSH) : This means that there are many of open ports that are detected. It can be understood that if a system contains many opens ports the attack surface is also large. This can be remedied by using windows firewall to disable 
+                                inbound and outbound connections that are not required. Netstat can then be used to listen for open ports.
+  - OS identification         : This can be addressed by disabling unnecessary banners and discovery protocols which would make it difficult for attackers to perform fingerprinting. This also allows for the attacker to gain information on the version of the 
+                                OS that is running allowing them to target known vulnerabilities.
+  - DCE services Enumeration  : This servicc e allows attackers to perform enumeration and should only be enabled if necessary or should Whitelist IPs that are only allowed that to preferably only allow internal IP addresses.
+  - mDNS Detection            : This services is used for local device discovery, this like any other DNS service can be used by attackers to map the local network. It can also leak information about the system running the service. Another issue that is
+                                that it can be used for amplification in DDoS attacks this very unlikely but it is possible. To disable this we can using the services.msc application.
+  -  STS is not enforced      : This makes it so that browsers are not enforcing HTTPS instead it will also allow for HTTP amd also will not ensure that HTTPS certificates are valid, this will allow attackers perform downgrade attacks.
+                                To fix this you can proceed to add the header to the web server configuration : Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+
+
+These were some of the low vulenrabilites that could easily be fixed or mitigated. Now for the medium level vulnerability as there are no critical or high severity vulnerabilities which was:
+  - SMB signing not required : This is found in the Server Message Block protocol that is used in file or printer sharing. This specific vulenrability means that every message on SMB is digitally signed to ensure integrity this means that the existance of this
+                               this vulnerability means that this digital signature is not required. This makes it so that the SMB messages can be intercepted, modified, malicious payloads can be injected and can replay authenication traffic. The existence of this
+                               of this makes it so that in corporate enviroments lateral movement and credential theft can be executed. This is not a risk for personal dekstops. That being said it is always better to turn of unneeded services. This can be done 
+                               using the control panel to find windows features and and uncheck the SMB feature. This can also be enabled and made so that digital signatures are turned on and only local network sharing is allowed so that the risks mentioned 
+                               above will be mitigated.
+  - SSL certificates cannot be trusted: 
+                                This means that the SSL certificate on the server is not trusted by clients. This can be due to expired, self-signed certificates or misiing intermediates or root CA certificates. Since this pc is not used for servers or other
+                                applications hosted online. This can be ignored but if you want to fix it you can proceed to used a trusted CA or install a full chain. 
